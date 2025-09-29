@@ -1,0 +1,53 @@
+{
+    "name": "fastapi-api",
+    "workspaceFolder": "/workspaces",
+    "build": {
+        "context": "../",
+        "dockerfile": "Dockerfile",
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.black-formatter",
+                "ms-python.isort",
+                "kevinrose.vsc-python-indent",
+                "aaron-bond.better-comments",
+                "mquandalle.graphql",
+                "streetsidesoftware.code-spell-checker"
+            ],
+            "settings": {
+                "[python]": {
+                    "editor.defaultFormatter": "ms-python.black-formatter",
+                    "editor.formatOnSave": true,
+                    "editor.codeActionsOnSave": {
+                        "source.organizeImports": "always"
+                    }
+                },
+                "python.linting.enabled": true,
+                "python.linting.flake8Enabled": true,
+                "files.exclude": {
+                    "**/__pycache__": true,
+                    "**/.pytest_cache": true,
+                    "**/*.pyc": true,
+                    "**/*.pyo": true,
+                    "**/*.pyd": true,
+                    "**/.Python": true,
+                    "**/env/": true,
+                    "**/venv/": true,
+                    "**/.venv/": true,
+                    "**/.tox/": true,
+                    "**/.coverage": true,
+                    "**/.cache": true,
+                    "**/nosetests.xml": true,
+                    "**/coverage.xml": true,
+                    "**/*.cover": true,
+                    "**/*.log": true
+                }
+            }
+        }
+    },
+    "forwardPorts": [
+        8000
+    ],
+    "remoteUser": "apmic"
+}

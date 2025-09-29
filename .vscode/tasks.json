@@ -1,0 +1,80 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "FastApi: runserver",
+            "type": "shell",
+            "command": "uvicorn",
+            "args": [
+                "app.main:app",
+                "--host=0.0.0.0",
+                "--reload",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/",
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "hasura: cli console",
+            "type": "shell",
+            "command": "hasura",
+            "args": [
+                "console",
+                "--envfile",
+                "dev.env",
+                "--no-browser",
+                "--skip-update-check"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/hasura"
+            }
+        },
+        {
+            "label": "Hasura: Apply metadata",
+            "type": "shell",
+            "command": "hasura",
+            "args": [
+                "metadata",
+                "apply",
+                "--envfile=dev.env",
+                "--skip-update-check"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/hasura"
+            }
+        },
+        {
+            "label": "Hasura: Apply migrations",
+            "type": "shell",
+            "command": "hasura",
+            "args": [
+                "migrate",
+                "apply",
+                "--envfile=dev.env",
+                "--skip-update-check"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/hasura"
+            }
+        },
+        {
+            "label": "Hasura: reload metadata",
+            "type": "shell",
+            "command": "hasura",
+            "args": [
+                "metadata",
+                "reload",
+                "--envfile=dev.env",
+                "--skip-update-check"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/hasura"
+            }
+        },
+    ]
+}

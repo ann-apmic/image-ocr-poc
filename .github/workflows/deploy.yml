@@ -1,0 +1,55 @@
+name: Build and deploy a container to an Azure Container App
+
+env:
+  containerName: sample-app # FIXME: this is sample
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@main
+
+      - name: "Login via Azure CLI"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Build and push image"
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ vars.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - run: |
+          docker build -f Dockerfile . -t ${{ vars.REGISTRY_LOGIN_SERVER }}/${{ env.containerName }}:${{ github.sha }}
+          docker push ${{ vars.REGISTRY_LOGIN_SERVER }}/${{ env.containerName }}:${{ github.sha }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Login via Azure CLI"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Container App
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          registryUrl: ${{ vars.REGISTRY_LOGIN_SERVER }}
+          registryUsername: ${{ secrets.REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
+          targetPort: 12345
+          containerAppName: ${{ env.containerName }}
+          resourceGroup: ${{ vars.RESOURCE_GROUP }}
+          imageToDeploy: ${{ vars.REGISTRY_LOGIN_SERVER }}/${{ env.containerName }}:${{ github.sha }}
+          containerAppEnvironment: ${{ env.containerName }}-env
+          location: "japaneast"

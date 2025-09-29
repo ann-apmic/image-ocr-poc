@@ -1,0 +1,36 @@
+name: "Python Format"
+
+on:
+  pull_request:
+
+jobs:
+  python-fmt:
+    name: "Format"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Sort imports with isort
+        run: |
+          pip install isort
+          isort .
+      - name: Format code with black
+        run: |
+          pip install black
+          black .
+      - name: Remove unused imports with autoflake
+        run: |
+          pip install autoflake
+          autoflake --in-place --remove-all-unused-imports --remove-unused-variables --recursive .
+      - name: Check for modified files
+        id: git-check
+        run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
+      - name: Push changes
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config --global user.name 'bot'
+          git config --global user.email 'bot@users.noreply.github.com'
+          git commit -a -m "style: auto format"
+          git push

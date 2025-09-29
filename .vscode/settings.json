@@ -1,0 +1,30 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.pyc": true
+    },
+    "remote.SSH.defaultForwardedPorts": [
+        {
+            "localPort": 8080,
+            "remotePort": 8080,
+            "name": "hasura01"
+        },
+        {
+            "localPort": 9693,
+            "remotePort": 9693,
+            "name": "hasura02"
+        },
+        {
+            "localPort": 9696,
+            "remotePort": 9696,
+            "name": "hasura03"
+        }
+    ]
+}

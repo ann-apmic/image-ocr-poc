@@ -1,0 +1,24 @@
+name: Sentry
+
+on:
+  push:
+    branches: [ "main" ]
+
+
+jobs:
+  sentry:
+    name: Sentry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: apmic
+          SENTRY_PROJECT: sample-api # FIXME: this is sample
+          SENTRY_URL: https://sentry-az.ap-mic.com/
+        with:
+          environment: main

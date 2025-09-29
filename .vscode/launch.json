@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: FastAPI with Uvicorn",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "/usr/local/bin/uvicorn",
+      "args": [
+        "app.main:app",
+        "--host=0.0.0.0",
+      ],
+      "justMyCode": false
+    }
+  ]
+}
