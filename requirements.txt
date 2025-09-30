@@ -1,8 +1,7 @@
-aiofiles~=23.1.0
-fastapi~=0.115.6
-gql[all]~=3.5.0b5
-httpx==0.24.1
-loguru~=0.7.0
-pytz
-sentry-sdk[fastapi]~=1.29.2
-uvicorn[standard]
+pytesseract>=0.3.10
+opencv-python>=4.8.0
+Pillow>=10.0.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+pandas>=2.0.0
+
